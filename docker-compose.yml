@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  server_mongo:
+    image: mongo
+    container_name: server_mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+
+  frontend:
+    container_name: frontend
+    image: node:18-alpine
+    environment:
+      BACKEND_URL: backend
+    volumes:
+      - ./frontend/:/frontend
+    command: npm run --prefix frontend dev
+    ports:
+      - "3001:3001"
+
+  backend:
+    container_name: backend
+    image: node:18-alpine
+    volumes:
+      - ./backend/:/backend
+    environment:
+      DATABASE_URL: server_mongo
+      PORT: 3000
+    command:
+      - /bin/sh
+      - -c
+      - |
+          npm run --prefix backend start
+    ports:
+      - "3000:3000"
+
