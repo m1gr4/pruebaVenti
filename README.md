@@ -20,3 +20,6 @@ npm run dev
 cd backend &&
 npm i &&
 npm run dev
+
+## Tiene que estar levantada la base de datos mongodb
+## el servicio backend automaticamente genera el schema para la base de datos
